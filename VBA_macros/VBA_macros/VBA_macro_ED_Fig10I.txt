@@ -1,0 +1,174 @@
+Sub Multiply_count_contact_allROI()
+Attribute Multiply_count_contact_allROI.VB_Description = "Using an excel file aquired from a Measure particles fiji macro, with %area included, calculate the number of ROIs with ER contact or no contact for each timepoint. Also include the percentage of ROIs with ER contact over total ROIs for each timepoint."
+Attribute Multiply_count_contact_allROI.VB_ProcData.VB_Invoke_Func = " \n14"
+'
+' Multiply_count_contact_allROI Macro
+' Using an excel file aquired from a Measure particles fiji macro, with %area included, calculate the number of ROIs with ER contact or no contact for each timepoint.
+' Also include the percentage of ROIs with ER contact over total ROIs for each timepoint.
+' Used for ED_Fig10I.
+
+'
+Dim MyFolder As String 'Path collected from the folder picker dialog
+    Dim MyFile As String 'Filename obtained by DIR function
+    Dim wbk As Workbook 'Used to loop through each workbook
+On Error Resume Next
+Application.ScreenUpdating = False
+'Opens the folder picker dialog to allow user selection
+With Application.FileDialog(msoFileDialogFolderPicker)
+.Title = "Please select a folder"
+.Show
+.AllowMultiSelect = False
+    If .SelectedItems.Count = 0 Then 'If no folder is selected, abort
+MsgBox "You did not select a folder"
+      Exit Sub
+   End If
+MyFolder = .SelectedItems(1) & "\" 'Assign selected folder to MyFolder
+End With
+MyFile = Dir(MyFolder) 'DIR gets the first file of the folder
+'Loop through all files in a folder until DIR cannot find anymore
+Do While MyFile <> ""
+   'Opens the file and assigns to the wbk variable for future use
+   Set wbk = Workbooks.Open(fileName:=MyFolder & MyFile)
+   'Replace the line below with the statements you would want your macro to perform
+    Range("H1").Select
+    ActiveCell.FormulaR1C1 = "Timepoint"
+    Range("H2").Select
+    ActiveCell.FormulaR1C1 = "1"
+    Range("H3").Select
+    ActiveCell.FormulaR1C1 = "2"
+    Range("H2:H3").Select
+    Selection.AutoFill Destination:=Range("H2:H26"), Type:=xlFillDefault
+    Range("H2:H26").Select
+    Range("I1").Select
+    ActiveCell.FormulaR1C1 = "Contact"
+    Range("J1").Select
+    ActiveCell.FormulaR1C1 = "No contact"
+    Range("I2").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0001*"", C[-2], "">0"")"
+    Range("I3").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0002*"", C[-2], "">0"")"
+    Range("I4").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0003*"", C[-2], "">0"")"
+    Range("I5").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0004*"", C[-2], "">0"")"
+    Range("I6").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0005*"", C[-2], "">0"")"
+    Range("I7").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0006*"", C[-2], "">0"")"
+    Range("I8").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0007*"", C[-2], "">0"")"
+    Range("I9").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0008*"", C[-2], "">0"")"
+    Range("I10").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0009*"", C[-2], "">0"")"
+    Range("I11").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0010*"", C[-2], "">0"")"
+    Range("I12").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0011*"", C[-2], "">0"")"
+    Range("I13").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0012*"", C[-2], "">0"")"
+    Range("I14").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0013*"", C[-2], "">0"")"
+    Range("I15").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0014*"", C[-2], "">0"")"
+    Range("I16").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0015*"", C[-2], "">0"")"
+    Range("I17").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0016*"", C[-2], "">0"")"
+    Range("I18").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0017*"", C[-2], "">0"")"
+    Range("I19").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0018*"", C[-2], "">0"")"
+    Range("I20").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0019*"", C[-2], "">0"")"
+    Range("I21").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0020*"", C[-2], "">0"")"
+    Range("I22").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0021*"", C[-2], "">0"")"
+    Range("I23").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0022*"", C[-2], "">0"")"
+    Range("I24").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0023*"", C[-2], "">0"")"
+    Range("I25").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0024*"", C[-2], "">0"")"
+    Range("I26").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-7], ""*tif:0025*"", C[-2], "">0"")"
+    Range("J2").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0001*"", C[-3], ""=0"")"
+    Range("J3").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0002*"", C[-3], ""=0"")"
+    Range("J4").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0003*"", C[-3], ""=0"")"
+    Range("J5").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0004*"", C[-3], ""=0"")"
+    Range("J6").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0005*"", C[-3], ""=0"")"
+    Range("J7").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0006*"", C[-3], ""=0"")"
+    Range("J8").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0007*"", C[-3], ""=0"")"
+    Range("J9").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0008*"", C[-3], ""=0"")"
+    Range("J10").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0009*"", C[-3], ""=0"")"
+    Range("J11").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0010*"", C[-3], ""=0"")"
+    Range("J12").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0011*"", C[-3], ""=0"")"
+    Range("J13").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0012*"", C[-3], ""=0"")"
+    Range("J14").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0013*"", C[-3], ""=0"")"
+    Range("J15").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0014*"", C[-3], ""=0"")"
+    Range("J16").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0015*"", C[-3], ""=0"")"
+    Range("J17").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0016*"", C[-3], ""=0"")"
+    Range("J18").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0017*"", C[-3], ""=0"")"
+    Range("J19").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0018*"", C[-3], ""=0"")"
+    Range("J20").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0019*"", C[-3], ""=0"")"
+    Range("J21").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0020*"", C[-3], ""=0"")"
+    Range("J22").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0021*"", C[-3], ""=0"")"
+    Range("J23").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0022*"", C[-3], ""=0"")"
+    Range("J24").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0023*"", C[-3], ""=0"")"
+    Range("J25").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0024*"", C[-3], ""=0"")"
+    Range("J26").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(C[-8], ""*tif:0025*"", C[-3], ""=0"")"
+    Range("K1").Select
+    ActiveCell.FormulaR1C1 = "%Contact"
+    Range("K2").Select
+    ActiveCell.FormulaR1C1 = "=(RC[-2]/(RC[-2]+RC[-1]))"
+    Range("K2").Select
+    Selection.AutoFill Destination:=Range("K2:K26"), Type:=xlFillDefault
+    Range("K2:K26").Select
+    Range("L1").Select
+    ActiveCell.FormulaR1C1 = "%No Contact"
+    Range("L2").Select
+    ActiveCell.FormulaR1C1 = "=(RC[-2]/(RC[-2]+RC[-3]))"
+    Range("L2").Select
+    Selection.AutoFill Destination:=Range("L2:L26"), Type:=xlFillDefault
+    Range("L2:L26").Select
+    Range("M1").Select
+    ActiveCell.FormulaR1C1 = "Average %contact"
+    Range("N1").Select
+    ActiveCell.FormulaR1C1 = "Average %NoContact"
+    Range("M2").Select
+    ActiveCell.FormulaR1C1 = "=AVERAGE(RC[-2]:R[24]C[-2])"
+    Range("N2").Select
+    ActiveCell.FormulaR1C1 = "=(1-RC[-1])"
+    'Enter all custom statements above this line
+wbk.Close savechanges:=True
+MyFile = Dir 'DIR gets the next file in the folder
+Loop
+Application.ScreenUpdating = True
+   
+End Sub

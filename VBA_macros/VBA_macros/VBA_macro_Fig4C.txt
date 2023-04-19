@@ -1,0 +1,70 @@
+Sub Multiply_Single_DP_area_pixel()
+'
+' Multiply_Single_DP_area Macro
+' Used for Fig4C.
+
+    Dim MyFolder As String 'Path collected from the folder picker dialog
+    Dim MyFile As String 'Filename obtained by DIR function
+    Dim wbk As Workbook 'Used to loop through each workbook
+On Error Resume Next
+Application.ScreenUpdating = False
+'Opens the folder picker dialog to allow user selection
+With Application.FileDialog(msoFileDialogFolderPicker)
+.Title = "Please select a folder"
+.Show
+.AllowMultiSelect = False
+    If .SelectedItems.Count = 0 Then 'If no folder is selected, abort
+MsgBox "You did not select a folder"
+      Exit Sub
+   End If
+MyFolder = .SelectedItems(1) & "\" 'Assign selected folder to MyFolder
+End With
+MyFile = Dir(MyFolder) 'DIR gets the first file of the folder
+'Loop through all files in a folder until DIR cannot find anymore
+Do While MyFile <> ""
+   'Opens the file and assigns to the wbk variable for future use
+   Set wbk = Workbooks.Open(fileName:=MyFolder & MyFile)
+   'Replace the line below with the statements you would want your macro to perform
+    
+    Range("H1").Select
+    ActiveCell.FormulaR1C1 = "Total pixels in ROI"
+    Range("I1").Select
+    ActiveCell.FormulaR1C1 = "% positive pixels "
+    Range("H2").Select
+    ActiveCell.FormulaR1C1 = "=ROUND((RC[-5]/(0.065*0.065)),0)"
+    Range("H2").Select
+    Selection.AutoFill Destination:=Range("H:H"), Type:=xlFillDefault
+    Range("H2", "H" & Cells(Rows.Count, 1).End(xlUp).Row).FillDown
+    Range("H:H").Select
+    Range("I2").Select
+    ActiveCell.FormulaR1C1 = "=ROUND((RC[-1]*(RC[-2]/100)),0)"
+    Range("I2").Select
+    Selection.AutoFill Destination:=Range("I:I"), Type:=xlFillDefault
+    Range("I2", "I" & Cells(Rows.Count, 1).End(xlUp).Row).FillDown
+    Range("I:I").Select
+    Range("J1").Select
+    ActiveCell.FormulaR1C1 = "Timepoint"
+    Range("J2").Select
+    ActiveCell.FormulaR1C1 = "1"
+    Range("J3").Select
+    ActiveCell.FormulaR1C1 = "2"
+    Range("J2:J3").Select
+    Selection.AutoFill Destination:=Range("J2:J26"), Type:=xlFillDefault
+    Range("J2:J26").Select
+    Range("K1").Select
+    ActiveCell.FormulaR1C1 = "Contact"
+    Range("L1").Select
+    ActiveCell.FormulaR1C1 = "No contact"
+    Range("K2").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(RC[-2]:R[24]C[-2], "">=4"")"
+    Range("L2").Select
+    ActiveCell.FormulaR1C1 = "=COUNTIFS(RC[-3]:R[24]C[-3], ""<4"")"
+    'Enter all custom statements above this line
+wbk.Close savechanges:=True
+MyFile = Dir 'DIR gets the next file in the folder
+Loop
+Application.ScreenUpdating = True
+   
+    
+End Sub
+
